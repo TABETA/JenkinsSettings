@@ -1,0 +1,17 @@
+#! /bin/sh
+
+# ブランチ名を取得
+SRC=$(git rev-parse --symbolic --abbrev-ref $1)
+
+
+# 以下のcase分で定義していないブランチは*)に入って処理せずに弾かれる。
+case "$SRC" in
+	hoge1/*) ;;
+	hoge2/*) ;;
+	hoge3/*) ;;
+	*)
+		exit 1
+		;;
+esac
+
+exit 0

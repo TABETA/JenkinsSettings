@@ -1,0 +1,29 @@
+#! /bin/sh
+
+
+function kickJob() {
+	#TBD
+}
+
+# ブランチ名を取得
+SRC=$(git rev-parse --symbolic --abbrev-ref $1)
+# 最終コミッター名を取得
+# COMMITTER=$(git log --pretty=format:"%cn" | head -n 1)
+
+# 以下のcase分で定義していないブランチは*)に入って処理せずに弾かれる。
+case "$SRC" in
+	hoge1/*) ;;
+	hoge2/*) ;;
+	hoge3/*) ;;
+	*)
+		exit 1
+		;;
+esac
+
+# DSTブランチはSRCから最初の/以降を除去した名前にする
+# ?? SRCに入る文字列が"refs/*"になる場合は以下のコードではだめ。要確認 ??
+DST=$(SRC%%/*)  
+#ここにJenkinsのジョブをキックするコードを入れる
+kickJob $SRC $DST
+
+exit 0
